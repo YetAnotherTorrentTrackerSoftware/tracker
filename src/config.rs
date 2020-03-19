@@ -10,6 +10,7 @@ pub struct YaatsConfig {
     pub listen_address: String,
     pub redis_url: String,
     pub authorization_url: Option<String>,
+    pub request_interval: usize,
 }
 
 impl YaatsConfig {
