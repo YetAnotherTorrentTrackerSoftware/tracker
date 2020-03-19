@@ -2,6 +2,7 @@ use crate::config::YaatsConfig;
 use actix_web::{App, HttpServer};
 
 mod config;
+mod models;
 
 #[actix_rt::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
