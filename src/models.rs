@@ -1,16 +1,17 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use std::net::IpAddr;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct AnnounceRequest {
-    pub info_hash: [u8; 20],
+    pub info_hash: String,
     pub peer_id: String,
     pub port: u16,
     pub uploaded: u32,
     pub downloaded: u32,
     pub left: u32,
     #[serde(default = "Event::default")]
-    pub event: Event
+    pub event: Event,
+    pub passkey: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -18,19 +19,19 @@ pub struct AnnounceRequest {
 pub enum AnnounceResponse {
     Success {
         interval: u32,
-        peers: Vec<Peer>
+        peers: Vec<Peer>,
     },
     Failure {
         #[serde(rename = "failure_reason")]
         reason: String,
-    }
+    },
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Peer {
     pub id: String,
     pub ip: IpAddr,
-    pub port: u16
+    pub port: u16,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -40,12 +41,26 @@ pub enum Event {
     Started,
     #[serde(rename = "completed")]
     Completed,
+    #[serde(rename = "stopped")]
+    Stopped,
     #[serde(rename = "empty")]
-    Empty
+    Empty,
 }
 
 impl Default for Event {
     fn default() -> Self {
         Event::Empty
     }
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct AuthRequest {
+    pub announce: AnnounceRequest,
+    pub metadata: Metadata,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Metadata {
+    pub user_agent: String,
+    pub request_ip: String,
 }
