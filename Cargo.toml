@@ -19,3 +19,7 @@ redis = "0.15.1"
 log = "0.4.8"
 async-log = "2.0.0"
 config = "0.10.1"
+
+[profile.release]
+lto = true
+opt-level = 3
