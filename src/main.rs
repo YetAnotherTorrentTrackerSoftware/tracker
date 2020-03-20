@@ -14,9 +14,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     HttpServer::new(move || {
         App::new().route("/announce", web::get().to(handlers::handle_announce))
     })
-    .bind(config.listen_address)?
-    .run()
-    .await?;
+        // Start the server with a certain amount of worker threads if the corresponding option is set.
+        // By default, one worker  thread per logical core is started.
+        .workers(config.worker_threads.unwrap_or(num_cpus::get()))
+        .bind(config.listen_address)?
+        .run()
+        .await?;
 
     Ok(())
 }

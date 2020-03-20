@@ -5,12 +5,13 @@ use std::path::PathBuf;
 
 const DEFAULT_CONFIG_PATH: &str = "config.toml";
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct YaatsConfig {
     pub listen_address: String,
     pub redis_url: String,
     pub authorization_url: Option<String>,
     pub request_interval: usize,
+    pub worker_threads: Option<usize>,
 }
 
 impl YaatsConfig {
