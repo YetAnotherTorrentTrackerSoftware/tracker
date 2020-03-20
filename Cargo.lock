@@ -1981,10 +1981,12 @@ dependencies = [
 name = "yaats-tracker"
 version = "0.1.0"
 dependencies = [
+ "actix-http",
  "actix-rt",
  "actix-web",
  "async-log",
  "config",
+ "futures",
  "log",
  "redis",
  "serde 1.0.105",

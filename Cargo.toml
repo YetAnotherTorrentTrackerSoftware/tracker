@@ -8,9 +8,12 @@ license = "MIT"
 [dependencies]
 actix-web = "3.0.0-alpha.1"
 actix-rt = "1.0.0"
+actix-http = "2.0.0-alpha.2"
 
 serde = "1.0.105"
 serde_bencode = "0.2.1"
+
+futures = "0.3.4"
 
 redis = "0.15.1"
 log = "0.4.8"
