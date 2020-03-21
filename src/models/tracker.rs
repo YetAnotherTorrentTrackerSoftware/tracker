@@ -56,11 +56,11 @@ impl Default for Event {
 #[derive(Serialize, Deserialize, Debug)]
 pub struct AuthRequest {
     pub announce: AnnounceRequest,
-    pub metadata: Metadata,
+    pub metadata: AuthMetadata,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct Metadata {
+pub struct AuthMetadata {
     pub user_agent: String,
     pub request_ip: String,
 }

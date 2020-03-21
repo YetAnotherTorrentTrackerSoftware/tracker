@@ -1,5 +1,5 @@
 use crate::bencode::Bencode;
-use crate::models::{AnnounceRequest, AnnounceResponse, Peer};
+use crate::models::tracker::{AnnounceRequest, AnnounceResponse, Peer};
 use actix_web::HttpRequest;
 use std::net::{IpAddr, Ipv4Addr};
 

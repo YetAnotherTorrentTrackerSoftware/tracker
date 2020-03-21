@@ -18,7 +18,7 @@ futures = "^0.3"
 num_cpus = "^1.12"
 redis = "^0.15"
 log = "^0.4"
-async-log = "^2.0"
+pretty_env_logger = "0.4.0"
 config = "^0.10"
 
 [profile.release]

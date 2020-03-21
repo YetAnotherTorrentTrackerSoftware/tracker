@@ -12,6 +12,7 @@ pub struct YaatsConfig {
     pub authorization_url: Option<String>,
     pub request_interval: usize,
     pub worker_threads: Option<usize>,
+    pub log_level: Option<String>,
 }
 
 impl YaatsConfig {

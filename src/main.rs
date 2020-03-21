@@ -1,5 +1,5 @@
 use crate::config::YaatsConfig;
-use actix_web::{web, App, HttpServer};
+use actix_web::{middleware, App, HttpServer};
 
 mod bencode;
 mod config;
@@ -11,15 +11,23 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let config =
         YaatsConfig::new().map_err(|err| format!("Error reading configuration: {}", err))?;
 
+    std::env::set_var(
+        "RUST_LOG",
+        config.log_level.unwrap_or_else(|| "info".to_owned()),
+    );
+    pretty_env_logger::init();
+
     HttpServer::new(move || {
-        App::new().route("/announce", web::get().to(handlers::handle_announce))
+        App::new()
+            .wrap(middleware::Logger::default())
+            .configure(handlers::configure)
     })
-        // Start the server with a certain amount of worker threads if the corresponding option is set.
-        // By default, one worker  thread per logical core is started.
-        .workers(config.worker_threads.unwrap_or(num_cpus::get()))
-        .bind(config.listen_address)?
-        .run()
-        .await?;
+    // Start the server with a certain amount of worker threads if the corresponding option is set.
+    // By default, one worker  thread per logical core is started.
+    .workers(config.worker_threads.unwrap_or_else(num_cpus::get))
+    .bind(config.listen_address)?
+    .run()
+    .await?;
 
     Ok(())
 }
