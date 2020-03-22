@@ -6,10 +6,19 @@ mod config;
 mod handlers;
 mod models;
 
+#[derive(Clone)]
+pub struct AppState {
+    config: YaatsConfig,
+}
+
 #[actix_rt::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let config =
         YaatsConfig::new().map_err(|err| format!("Error reading configuration: {}", err))?;
+
+    let app_state = AppState {
+        config: config.clone(),
+    };
 
     std::env::set_var(
         "RUST_LOG",
@@ -19,6 +28,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     HttpServer::new(move || {
         App::new()
+            .data(app_state.clone())
             .wrap(middleware::Logger::default())
             .configure(handlers::configure)
     })

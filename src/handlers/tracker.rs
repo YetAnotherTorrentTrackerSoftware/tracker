@@ -6,7 +6,7 @@ use std::net::{IpAddr, Ipv4Addr};
 pub async fn handle_announce(req: HttpRequest) -> Bencode<AnnounceResponse> {
     let query = req.query_string();
 
-    match serde_bencode::from_str::<AnnounceRequest>(query) {
+    match serde_urlencoded::from_str::<AnnounceRequest>(query) {
         Ok(_announcement) => Bencode(AnnounceResponse::Success {
             interval: 1337,
             peers: vec![
@@ -28,7 +28,7 @@ pub async fn handle_announce(req: HttpRequest) -> Bencode<AnnounceResponse> {
             ],
         }),
         Err(e) => Bencode(AnnounceResponse::Failure {
-            reason: format!("Error parsing bencode request: {}", e),
+            reason: format!("Error parsing query string: {}", e),
         }),
     }
 }

@@ -2128,6 +2128,7 @@ dependencies = [
  "redis",
  "serde 1.0.105",
  "serde_bencode",
+ "serde_urlencoded",
 ]
 
 [[package]]
