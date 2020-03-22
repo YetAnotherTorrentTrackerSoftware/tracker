@@ -1,5 +1,5 @@
 /// Bencode responder
-use std::{fmt, ops};
+use std::fmt;
 
 use futures::future::{err, ok, Ready};
 use serde::Serialize;
@@ -10,20 +10,6 @@ use serde::export::Formatter;
 
 /// Wrapper type for bencode response generation
 pub struct Bencode<T>(pub T);
-
-impl<T> ops::Deref for Bencode<T> {
-    type Target = T;
-
-    fn deref(&self) -> &T {
-        &self.0
-    }
-}
-
-impl<T> ops::DerefMut for Bencode<T> {
-    fn deref_mut(&mut self) -> &mut T {
-        &mut self.0
-    }
-}
 
 impl<T> fmt::Debug for Bencode<T>
 where
