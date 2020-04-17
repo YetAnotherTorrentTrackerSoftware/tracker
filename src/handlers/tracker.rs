@@ -1,9 +1,13 @@
 use crate::bencode::Bencode;
 use crate::models::tracker::{AnnounceRequest, AnnounceResponse, Peer};
-use actix_web::HttpRequest;
+use crate::AppState;
+use actix_web::{web, HttpRequest};
 use std::net::{IpAddr, Ipv4Addr};
 
-pub async fn handle_announce(req: HttpRequest) -> Bencode<AnnounceResponse> {
+pub async fn handle_announce(
+    req: HttpRequest,
+    _app_state: web::Data<AppState>,
+) -> Bencode<AnnounceResponse> {
     let query = req.query_string();
 
     match serde_urlencoded::from_str::<AnnounceRequest>(query) {

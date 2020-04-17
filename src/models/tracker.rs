@@ -11,7 +11,6 @@ pub struct AnnounceRequest {
     pub left: u32,
     #[serde(default = "Event::default")]
     pub event: Event,
-    pub passkey: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]

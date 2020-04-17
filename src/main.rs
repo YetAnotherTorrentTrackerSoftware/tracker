@@ -5,6 +5,7 @@ mod bencode;
 mod config;
 mod handlers;
 mod models;
+mod storage;
 
 #[derive(Clone)]
 pub struct AppState {
